@@ -4,6 +4,8 @@ step = 0.01;
 tsol = 0:step:tmax;
 ysol = zeros(1, length(tsol));
 xsol = zeros(1, length(tsol));
+errorx = zeros(1, length(tsol));
+errory = zeros(1, length(tsol));
 xsol(1) = 1;
 ysol(1) = 1;
 ysol1 = zeros(1, length(tsol));
@@ -33,12 +35,18 @@ for i = 1:(length(tsol)-1)
     ysol1(i+1) = ysol(i) + (1/336)*step*(14*l0+35*l3+162*l4+125*l5);
     
 end
+errorx = abs(xsol-xsol1);
+errory = abs(ysol-ysol1);
+%hold on
+%plot(xsol, ysol,'DisplayName', 'Converged limit cycle');
+%plot(xsol1, ysol1,'DisplayName', 'Accurate');
+%title('RK4 approximation of the Brusselator in the phase plane (x,y)','FontSize',14);
+%xlabel('x', 'FontSize',14);
+%ylabel('y', 'FontSize',14);
+%legend('show', 'FontSize',20);
+%set(gca,'FontSize',20);
+%hold off
 hold on
-plot(xsol, ysol,'DisplayName', 'Converged limit cycle');
-plot(xsol1, ysol1,'DisplayName', 'Accurate');
-title('RK4 approximation of the Brusselator in the phase plane (x,y)','FontSize',14);
-xlabel('x', 'FontSize',14);
-ylabel('y', 'FontSize',14);
+plot(tsol, errorx,'DisplayName', 'X');
+plot(tsol, errory,'DisplayName', 'y');
 legend('show', 'FontSize',20);
-set(gca,'FontSize',20);
-hold off
