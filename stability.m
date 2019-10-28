@@ -1,0 +1,21 @@
+x0 = -3;
+x1 = 1;
+Nx = 301;
+y0 = -3;
+y1 = 3;
+Ny = 301;
+xv = linspace(x0,x1, Nx);
+yv = linspace(y0,y1,Ny);
+[x,y] = meshgrid(xv,yv);
+z = x + 1i*y;
+g = 1+z+0.5*z.^2+(1/6)*z.^3+(1/24)*z.^4;
+gmag=abs(g);
+contour(x,y,gmag,[1 1]);
+axis([x0,x1,y0,y1]);
+axis('square');
+grid on
+title('RK4 region of absolute stability','FontSize',14);
+xlabel('Real h \lambda', 'FontSize',14);
+ylabel('Imaginary h \lambda', 'FontSize',14);
+%legend('show', 'FontSize',20);
+set(gca,'FontSize',20);;

@@ -50,3 +50,4 @@ hold on
 plot(tsol, errorx,'DisplayName', 'X');
 plot(tsol, errory,'DisplayName', 'y');
 legend('show', 'FontSize',20);
+hold off
