@@ -1,13 +1,13 @@
 clear all
-tmax = 25;
+tmax = 250;
 step = 0.01;
 tsol = 0:step:tmax;
 ysol = zeros(1, length(tsol));
 xsol = zeros(1, length(tsol));
-xsol(1) = 1;
-ysol(1) = 1;
+xsol(1) = 0;
+ysol(1) = 0;
 Aconst = 1;
-Bconst = 2.5;
+Bconst = 2.1;
 fxyt = @(tsol, xsol, ysol) Aconst - (Bconst * xsol) + xsol^2 * ysol - xsol;
 gxyt = @(tsol, xsol, ysol) Bconst * xsol - xsol^2 * ysol;
 for i = 1:(length(tsol)-1)
@@ -23,7 +23,7 @@ for i = 1:(length(tsol)-1)
     ysol(i+1) = ysol(i) + (1/6)*step*(l0 + 2*l1 + 2*l2 + l3);
 end
 hold on
-plot(xsol, ysol,'DisplayName', 'A = 1, B = 2.5');
+plot(tsol, ysol,'DisplayName', 'A = 1, B = 2.5');
 %plot(tsol, ysol,'r','DisplayName', 'Converged limit cycle');
 %plot(xconst,yconst, 'DisplayName','Estimated boundary');
 %plot(xcon,ycon,'DisplayName', 'Strict boundary');

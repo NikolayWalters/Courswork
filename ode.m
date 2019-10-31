@@ -1,6 +1,7 @@
 tmax = 25;
+% a loop of h values would do much better here
+% method below is equivalent to the code given in the report
 step = 0.0001;
-
 tsol = 0:step:tmax;
 ysol = zeros(1, length(tsol));
 xsol = zeros(1, length(tsol));
@@ -22,49 +23,27 @@ for i = 1:(length(tsol)-1)
     xsol(i+1) = xsol(i) + (1/6)*step*(k0 + 2*k1 + 2*k2 + k3);
     ysol(i+1) = ysol(i) + (1/6)*step*(l0 + 2*l1 + 2*l2 + l3);
 end
-step = 1;
-tsol3 = 0:step:tmax;
-ysol3 = zeros(1, length(tsol3));
-xsol3 = zeros(1, length(tsol3));
-xsol3(1) = 1;
-ysol3(1) = 1;
+step = 0.001;
+tsol0 = 0:step:tmax;
+ysol0 = zeros(1, length(tsol0));
+xsol0 = zeros(1, length(tsol0));
+xsol0(1) = 1;
+ysol0(1) = 1;
 Aconst = 1.5;
 Bconst = 2;
-fxyt = @(tsol3, xsol3, ysol3) Aconst - (Bconst * xsol3) + xsol3^2 * ysol3 - xsol3;
-gxyt = @(tsol3, xsol3, ysol3) Bconst * xsol3 - xsol3^2 * ysol3;
-for i = 1:(length(tsol3)-1)
-    k0 = fxyt(tsol3(i), xsol3(i), ysol3(i));
-    l0 = gxyt(tsol3(i), xsol3(i), ysol3(i));
-    k1 = fxyt(tsol3(i)+0.5*step,xsol3(i)+0.5*step*k0,ysol3(i)+0.5*step*l0);
-    l1 = gxyt(tsol3(i)+0.5*step,xsol3(i)+0.5*step*k0,ysol3(i)+0.5*step*l0);
-    k2 = fxyt((tsol3(i)+0.5*step),(xsol3(i)+0.5*step*k1),(ysol3(i)+0.5*step*l1));
-    l2 = gxyt((tsol3(i)+0.5*step),(xsol3(i)+0.5*step*k1),(ysol3(i)+0.5*step*l1));
-    k3 = fxyt((tsol3(i)+step),(xsol3(i)+k2*step),(ysol3(i)+l2*step));
-    l3 = gxyt((tsol3(i)+step),(xsol3(i)+k2*step),(ysol3(i)+l2*step));
-    xsol3(i+1) = xsol3(i) + (1/6)*step*(k0 + 2*k1 + 2*k2 + k3);
-    ysol3(i+1) = ysol3(i) + (1/6)*step*(l0 + 2*l1 + 2*l2 + l3);
-end
-step = 1;
-tsol3 = 0:step:tmax;
-ysol3 = zeros(1, length(tsol3));
-xsol3 = zeros(1, length(tsol3));
-xsol3(1) = 1;
-ysol3(1) = 1;
-Aconst = 1.5;
-Bconst = 2;
-fxyt = @(tsol3, xsol3, ysol3) Aconst - (Bconst * xsol3) + xsol3^2 * ysol3 - xsol3;
-gxyt = @(tsol3, xsol3, ysol3) Bconst * xsol3 - xsol3^2 * ysol3;
-for i = 1:(length(tsol3)-1)
-    k0 = fxyt(tsol3(i), xsol3(i), ysol3(i));
-    l0 = gxyt(tsol3(i), xsol3(i), ysol3(i));
-    k1 = fxyt(tsol3(i)+0.5*step,xsol3(i)+0.5*step*k0,ysol3(i)+0.5*step*l0);
-    l1 = gxyt(tsol3(i)+0.5*step,xsol3(i)+0.5*step*k0,ysol3(i)+0.5*step*l0);
-    k2 = fxyt((tsol3(i)+0.5*step),(xsol3(i)+0.5*step*k1),(ysol3(i)+0.5*step*l1));
-    l2 = gxyt((tsol3(i)+0.5*step),(xsol3(i)+0.5*step*k1),(ysol3(i)+0.5*step*l1));
-    k3 = fxyt((tsol3(i)+step),(xsol3(i)+k2*step),(ysol3(i)+l2*step));
-    l3 = gxyt((tsol3(i)+step),(xsol3(i)+k2*step),(ysol3(i)+l2*step));
-    xsol3(i+1) = xsol3(i) + (1/6)*step*(k0 + 2*k1 + 2*k2 + k3);
-    ysol3(i+1) = ysol3(i) + (1/6)*step*(l0 + 2*l1 + 2*l2 + l3);
+fxyt = @(tsol0, xsol0, ysol0) Aconst - (Bconst * xsol0) + xsol0^2 * ysol0 - xsol0;
+gxyt = @(tsol0, xsol0, ysol0) Bconst * xsol0 - xsol0^2 * ysol0;
+for i = 1:(length(tsol0)-1)
+    k0 = fxyt(tsol0(i), xsol0(i), ysol0(i));
+    l0 = gxyt(tsol0(i), xsol0(i), ysol0(i));
+    k1 = fxyt(tsol0(i)+0.5*step,xsol0(i)+0.5*step*k0,ysol0(i)+0.5*step*l0);
+    l1 = gxyt(tsol0(i)+0.5*step,xsol0(i)+0.5*step*k0,ysol0(i)+0.5*step*l0);
+    k2 = fxyt((tsol0(i)+0.5*step),(xsol0(i)+0.5*step*k1),(ysol0(i)+0.5*step*l1));
+    l2 = gxyt((tsol0(i)+0.5*step),(xsol0(i)+0.5*step*k1),(ysol0(i)+0.5*step*l1));
+    k3 = fxyt((tsol0(i)+step),(xsol0(i)+k2*step),(ysol0(i)+l2*step));
+    l3 = gxyt((tsol0(i)+step),(xsol0(i)+k2*step),(ysol0(i)+l2*step));
+    xsol0(i+1) = xsol0(i) + (1/6)*step*(k0 + 2*k1 + 2*k2 + k3);
+    ysol0(i+1) = ysol0(i) + (1/6)*step*(l0 + 2*l1 + 2*l2 + l3);
 end
 step = 0.01;
 tsol1 = 0:step:tmax;
@@ -132,33 +111,25 @@ for i = 1:(length(tsol3)-1)
     xsol3(i+1) = xsol3(i) + (1/6)*step*(k0 + 2*k1 + 2*k2 + k3);
     ysol3(i+1) = ysol3(i) + (1/6)*step*(l0 + 2*l1 + 2*l2 + l3);
 end
-errorx = log10(mean(abs(xsol(1:10:end)-xsol0)))
-errorx0 = log10(mean(abs(xsol(1:100:end)-xsol1)))
-errorx1 = log10(mean(abs(xsol(1:1000:end)-xsol2)))
-errorx2 = log10(mean(abs(xsol(1:10000:end)-xsol3)))
-plot([1;2;3;4], [errorx;errorx0;errorx1;errorx2], '-o');
+
+% calculating absolute average log oferror between different steps
+errorx = log10(mean(abs(xsol(1:10:end)-xsol0)));
+errorx0 = log10(mean(abs(xsol(1:100:end)-xsol1)));
+errorx1 = log10(mean(abs(xsol(1:1000:end)-xsol2)));
+errorx2 = log10(mean(abs(xsol(1:10000:end)-xsol3)));
+
+% calculating best fit
+coefficients = polyfit([1,2,3,4], [errorx, errorx0, errorx1, errorx2],1);
+a = coefficients(1); %gradient estimate using least-squares
+
+% plotting error and best fit
+hold on;
+plot([1;2;3;4], [errorx;errorx0;errorx1;errorx2], 'o', 'DisplayName', 'Average log error');
+plot(1:0.1:4, polyval(coefficients,1:0.1:4), '-', 'DisplayName', 'Linear best fit');
 title('RK4 difference in error as step size increases','FontSize',14);
 xlabel('Step increased by h_c * 10^x', 'FontSize',14);
 ylabel('log_{10} averaged error difference with h_c', 'FontSize',14);
 grid on;
-coefficients = polyfit([0,1,2,3], log10([errorx, errorx0, errorx1, errorx2]),1);
-a = coefficients(1)
-%tsol3 is the one
-%xsol = xsol(1:10:end);
-%ysol = ysol(1:10:end);
-%errorx = abs(xsol-xsol1);
-%errory = abs(ysol-ysol1);
-%hold on
-%plot(xsol2, ysol2,'DisplayName', 'Converged limit cycle');
-%plot(xsol3, ysol3,'DisplayName', 'Accurate');
-%title('RK4 approximation of the Brusselator in the phase plane (x,y)','FontSize',14);
-%xlabel('x', 'FontSize',14);
-%ylabel('y', 'FontSize',14);
-%legend('show', 'FontSize',20);
+legend('location', 'northwest', 'FontSize',20);
 set(gca,'FontSize',20);
-%hold off
-%hold on
-%plot(tsol1, errorx,'DisplayName', 'X');
-%plot(tsol1, errory,'DisplayName', 'y');
-%legend('show', 'FontSize',20);
-%hold off
+hold off;
